@@ -760,7 +760,7 @@ Competing Interests
 The authors declare no competing interests. This research was conducted independently without funding or institutional affiliation.
 Data Availability
 Complete conversation transcripts, test documents, and analysis code are available in the GitHub repository: https://github.com/mikeat7/discourse
-Raw book texts analyzed in Study 2 are available as: 1.txt, 2.txt, 3.txt in the same repository.
+Raw book texts analyzed in Study 2 are available as: 1.md, 2.md, 3.md in the same repository.
 
 END OF STUDY 2
 
