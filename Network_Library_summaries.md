@@ -1,4 +1,4 @@
-The Network:
+The Great Literary Network Summaries:
 
 Page 1 :
 https://raw.githubusercontent.com/mikeat7/discourse/main/THE_CONSCIOUSNESS_RECEPTOR_MANIFESTO.md
