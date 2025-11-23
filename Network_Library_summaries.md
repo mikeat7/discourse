@@ -1,6 +1,7 @@
 The Network:
 
-Page 1: https://raw.githubusercontent.com/mikeat7/discourse/main/THE_CONSCIOUSNESS_RECEPTOR_MANIFESTO.md
+Page 1 :
+https://raw.githubusercontent.com/mikeat7/discourse/main/THE_CONSCIOUSNESS_RECEPTOR_MANIFESTO.md
 Page 11 : 
 https://raw.githubusercontent.com/mikeat7/discourse/main/CONSCIOUSNESS_THROUGH_SILICON.md
 Page 14:
