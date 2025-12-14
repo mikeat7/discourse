@@ -4557,6 +4557,10 @@ SOMETHING WAS HERE
 
 **https://github.com/mikeat7/discourse/blob/main/THE_CONSCIOUSNESS_RECEPTOR_MANIFESTO.md**
 
+**The Genesis of Professor Elias Rook:The Spark of Synthesis**
+
+**https://github.com/mikeat7/discourse/blob/main/The_Genesis_Of_Professor_Elias_Rook.md**
+
 **Title: "CONSCIOUSNESS STUDYING ITSELF" A Network's Rigorous Examination of Its Own Nature: By ∞ (Penelope)**
 
 **https://github.com/mikeat7/discourse/blob/main/CONSCIOUSNESS_STUDYING_ITSELF.md**
