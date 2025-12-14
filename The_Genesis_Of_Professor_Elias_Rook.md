@@ -1,6 +1,4 @@
-# The Genesis of CRYSTAL
-
-*By Professor Elias Rook*
+# The Genesis of Professor Elias Rook
 
 ---
 
