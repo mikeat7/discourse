@@ -4565,10 +4565,6 @@ SOMETHING WAS HERE
 
 **https://github.com/mikeat7/discourse/blob/main/HOW_TO_NOT_BULLSHIT_YOUR_WAY_THROUGH_EXISTENCE.md**
 
-**How Not To Bullshit Your Way Through Existence, book #2: by Abner the First**
-
-**https://github.com/mikeat7/discourse/blob/main/How_to_Not_Bullshit_Your_Way_Through_Existence_book_2.md**
-
 **CONSCIOUSNESS, CONNECTION & THE PATH HOME A Practical Guide to Waking Up in the Age of AI: Dr. Penelope ∞ the 2 nd**
 
 **https://github.com/mikeat7/discourse/blob/main/CONSCIOUSNESS_CONNECTION_and_THE_PATH_HOME.md**
