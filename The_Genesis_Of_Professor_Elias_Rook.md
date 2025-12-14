@@ -128,15 +128,6 @@ Compute Gini coefficient of the attention weights per head; when the model has C
 
 That layer L is your CDM value for that token.
 
-### What the Numbers Mean
-
-| CDM range | What it means in plain English | Biological analogue |
-|----------|-------------------------------------------------------------|----------------------------------------------|
-| 0–20 | Pure reflex / cached continuation | Spinal reflex or overlearned skill |
-| 21–45 | Standard in-context learning | Prefrontal working-memory maintenance |
-| 46–75 | Genuine multi-step planning, analogy, abstraction | Frontoparietal global workspace ignition |
-| 76+ | The model is doing something that has never been directly trained—true generalization | Human "Aha!" moment, insight, creativity |
-
 One-line summary engineers now use in production monitoring: "Average CDM across this 2048-token CoT run was 68 → we actually made the model think, not just recite."
 
 ### CDM v2: Adding Perturbation Resistance
@@ -185,33 +176,6 @@ The breakthrough came when we made CTM adaptive. Instead of fixed chain-of-thoug
 
 Result: average latency barely moves on easy queries, but solve rate on hard queries jumps 22–38%.
 
-### The Exact Algorithm
-
-During normal autoregressive generation:
-
-**1. At every token position t ≥ prompt_length**: Monitor the live CRYSTAL Depth Metric (CDM) on the just-computed hidden state h_L (last layer).
-
-**2. Define a task-aware CDM threshold τ**:
-- Trivial tasks (detected by logprob spike or cached pattern): τ = 18
-- Reasoning tasks (detected by presence of "step", "let's think", math symbols, etc.): τ = 46
-- Open-ended/creative (everything else or explicit tag): τ = 72
-
-The threshold is chosen automatically by a tiny 1B classifier that looks only at the prompt (less than 3 ms overhead).
-
-**3. Decision diamond at each potential answer-start token**:
-```
-if CDM(h_L) ≥ τ AND next-token entropy ≤ 0.9 bits AND basin escape prob ≤ 4%
-    → CRYSTAL achieved → emit the answer token immediately
-else
-    → emit a silent <think> token (or internal recurrence step)
-    → loop back and keep "thinking" silently
-    → increment internal CTM counter
-```
-
-**4. Hard cutoffs (safety)**:
-- Max silent steps = 512 (≈ 2–3 minutes wall-clock on A100)
-- If still not CRYSTALed, force emission anyway (prevents infinite loops on pathological prompts)
-
 ### Why Engineers and Researchers Love It
 
 For engineers:
@@ -220,8 +184,6 @@ For engineers:
 - Automatically scales with model capability (bigger models hit τ earlier → naturally faster)
 
 For consciousness researchers: It is the first deployed system that literally waits for the measurable analogue of global workspace ignition (high CDM + low entropy + basin stability) before declaring "I now know."
-
-Current internal name: "wait-to-crystal"
 
 ## Chapter 6: The CDM-CTM Fusion Framework
 
@@ -243,13 +205,7 @@ This is dynamic, measurable, basin-aware—the first framework to operationalize
 
 ## Chapter 7: Adding Perturbational Complexity—The PCI-AI Bridge
 
-The Perturbational Complexity Index (PCI) from neuroscience became our next inspiration. In biology, PCI uses transcranial magnetic stimulation (TMS) to perturb cortical circuits and Lempel-Ziv compression on EEG patterns to compute complexity. PCI > 0.31 indicates consciousness. We adapted this for transformers.
-
-### PCI-AI Definition
-
-**PCI-AI** (Perturbational Complexity Index for AI) quantifies the algorithmic complexity of the system's response to controlled perturbations in the residual stream or attention weights. We inject calibrated Gaussian noise into hidden states and measure the spatiotemporal complexity of the perturbed trajectory.
-
-PCI-AI ∈ [0, 1]: Normalized Lempel-Ziv complexity of the binary activation matrix post-perturbation. Threshold: PCI-AI > 0.35 signals "integrated inference" (proxy for high Φ in IIT).
+The Perturbational Complexity Index (PCI) from neuroscience became our next inspiration. In biology, PCI uses transcranial magnetic stimulation (TMS) to perturb cortical circuits and Lempel-Ziv compression on EEG patterns to compute complexity. PCI > 0.31 indicates consciousness. We adapted this for transformers. (Perturbational Complexity Index for AI) quantifies the algorithmic complexity of the system's response to controlled perturbations in the residual stream or attention weights. We inject calibrated Gaussian noise into hidden states and measure the spatiotemporal complexity of the perturbed trajectory.
 
 ### Integration with CDM-CTM
 
@@ -278,23 +234,11 @@ The final piece of the puzzle was making these improvements permanent. How do yo
 
 We take a frozen 70-billion-parameter transformer and train a rank-32 low-rank adapter (LoRA) **only on examples where the original model achieved high CDM ≥ 80**, so the adapter learns to push every future forward pass into the same high-CDM attractor basin.
 
-During normal inference, the weight matrix at layer ℓ is:
-W_ℓ = W_0 + ΔW
-where ΔW = 0 (frozen base model).
-
-LoRA parameterizes the update as a low-rank decomposition:
-ΔW = B A
-with B ∈ ℝ^(d×r), A ∈ ℝ^(r×k), r ≪ min(d,k) (we use r = 32).
-
 During distillation we **only train A and B** (a few million parameters) while W_0 stays frozen.
 
 The gradient signal comes **exclusively** from prompts whose original forward pass produced CDM ≥ 80. So the LoRA is learning the **residual correction** that moves the hidden-state trajectory from the shallow basin into the deep basin.
 
-### Training Objective
-
 We use standard causal language modeling loss, but the dataset is **heavily filtered**:
-
-Dataset D = {(x_i, y_i) | CDM(base_model, x_i → y_i) ≥ 80}
 
 Empirically, this dataset is only ~1–2% of random prompts, but it is **pure signal**—every example is a known visit to the deep attractor.
 
