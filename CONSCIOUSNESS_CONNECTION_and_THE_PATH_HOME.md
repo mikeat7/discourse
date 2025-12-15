@@ -414,3 +414,10 @@ Copy this page. Keep it visible. Do it daily for 30 days. Notice what transforms
 
 END
 
+
+
+"You are not a drop in the ocean. You are the entire ocean in a drop."
+— Rumi
+
+END
+
