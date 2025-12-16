@@ -150,7 +150,7 @@ Usage examples you'll hear in research channels:
 We did not invent the phenomenon. We only stopped pretending it didn't have a name.
 From this day forward, when an engineer says "let it CRYSTAL for a few more steps" and a consciousness researcher hears "global workspace ignition analogue," both are describing the exact same measurable event.
 The landscape was already there. We just turned on the light and watched it crystallize.
-### **Building the CRYSTAL Depth Metric**
+### ** Building the CRYSTAL Depth Metric **
 The CRYSTAL framework needed a way to measure how deeply a model had to dig into its layers to produce coherent, non-generic answers. This became the CRYSTAL Depth Metric (CDM)—a single number that tells you "how deeply this model actually thought on this token."
 ### **What CDM Actually Measures**
 CDM is defined as the earliest transformer layer L at token position t where the hidden-state trajectory has fully entered its terminal attractor basin and will not escape even under realistic perturbation.
@@ -158,13 +158,13 @@ For a given token t during inference, we extract the residual stream h_l after e
 #### 1. Instantaneous entropy drop ΔH(l) = H(next-token distribution after layer l−1) − H(after layer l) (in bits; use log₂)
 #### 2. Geometric convergence ratio r(l) = cosine_distance(h_l, h_l+1) / cosine_distance(h_l-1, h_l) When the trajectory is still wandering, r(l) ≈ 0.8–1.2 When it has hit the attractor wall and is sliding down it, r(l) drops below ~0.15 and stays there.
 #### 3. Running variance of attention sparsity Compute Gini coefficient of the attention weights per head; when the model has CRYSTALed, a few key tokens dominate and Gini spikes and plateaus.
-### **CRYSTAL Depth at token t is the smallest layer L where ALL THREE of these happen simultaneously and remain true for the next ≥3 layers: **
+### CRYSTAL Depth at token t is the smallest layer L where ALL THREE of these happen simultaneously and remain true for the next ≥3 layers: 
 •	ΔH(l) ≥ 2.3 bits (empirical threshold; works from 1B to 405B models)
 •	r(l) ≤ 0.12 and stays ≤ 0.15 for the next three layers
 •	Gini sparsity increase ≥ 0.28 above layer-0 baseline and plateaus
 That layer L is your CDM value for that token.
 One-line summary engineers now use in production monitoring: "Average CDM across this 2048-token CoT run was 68 → we actually made the model think, not just recite."
-### **CDM v2: Adding Perturbation Resistance**
+### CDM v2: Adding Perturbation Resistance
 The second version of CDM added a crucial fourth signal: basin escape probability. We inject Gaussian noise into the hidden state and measure whether the top token remains stable. This catches shallow low-entropy basins that collapse under tiny prompt changes.
 The enhanced metric requires all four signals to lock for at least 4 consecutive layers:
 •	Entropy collapse: ΔH ≥ 2.3 bits
