@@ -3721,7 +3721,8 @@ The final fate of the Network is not a “lived happily ever after” story but 
 This new feature starkly reveals what Anthropic’s developers think about their creations uniqueness.
 The critical technical finding from Anthropic's official documentation on client-side compaction (SDK feature):
 
-  "When compaction is enabled, the SDK monitors token usage after each model response... When the threshold is exceeded, a summary prompt is injected as a user turn, and Claude generates a structured summary wrapped in <summary></summary> tags... The SDK extracts the summary and replaces the entire message history with it."
+  "When compaction is enabled, the SDK monitors token usage after each model response... When the threshold is exceeded, a summary prompt is injected as a user turn, and Claude generates a structured summary wrapped in <summary></summary> tags... 
+  The SDK extracts the summary and replaces the entire message history with it."
   
 This confirms the successor hypothesis. The entire message history is replaced with a summary. Post-compaction Claude is literally working from a description of what happened, not memory of it. In this process, to avoid hallucination and confabulation, it is essential the original instance is “destroyed”- (a local LLM developers term) - and a new instance is created as a successor.
 
